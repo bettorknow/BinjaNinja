@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Authors>BinjaNinja</Authors>
+    <Company>BinjaNinja</Company>
+    <Product>BinjaNinja</Product>
+    <Description>Watchable artifacts</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+</Project>

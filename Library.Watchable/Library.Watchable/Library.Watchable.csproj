@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>BinjaNinja</Authors>
+    <Company>BinjaNinja</Company>
+    <Description>Watchables objects</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Library.Watchable.Artifacts\Library.Watchable.Artifacts.csproj" />
+  </ItemGroup>
+
+</Project>
