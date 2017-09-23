@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Library.Watchable.Artifacts\Library.Watchable.Artifacts.csproj" />
     <ProjectReference Include="..\Library.Watchable.Artifacts\Library.Watchable.Artifacts.csproj" />
   </ItemGroup>
 

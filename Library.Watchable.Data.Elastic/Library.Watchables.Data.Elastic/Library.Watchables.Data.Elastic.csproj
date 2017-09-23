@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NEST" Version="5.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Library.Watchable.Data.Artifacts\Library.Watchable.Data.Artifacts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Library.Framework">
+      <HintPath>..\..\Library.Framework\Library.Framework\bin\Debug\netcoreapp2.0\Library.Framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
