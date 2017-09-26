@@ -13,23 +13,25 @@ namespace Library.Watchables.Data.Elastic
 {
     public class ElasticStore : IWatchableStore
     {
-        private readonly IElasticLowLevelClient _elasticClient;
+        private readonly IElasticClient _elasticClient;
 
-        public ElasticStore(IElasticLowLevelClient elasticClient)
+        public ElasticStore(IElasticClient elasticClient)
         {
             _elasticClient = elasticClient.WhenNullThrow(nameof(elasticClient));
         }
 
-        public async Task<string> StoreTvWatchableAsync(ITvData tv)
+        public async Task<IIndexResponse> StoreTvWatchableAsync(ITvData tv)
         {
-            var asyncIndexResponse = await _elasticClient.IndexAsync<string>("tv", tv.Title, new PostData<ITvData>(tv));
-            return asyncIndexResponse.Body;
+            var asyncIndexResponse = await _elasticClient
+                .IndexAsync(tv);
+            return asyncIndexResponse;
         }
 
-        public async Task<string> StoreMovieWatchableAsync(IMovieData movie)
+        public async Task<IIndexResponse> StoreMovieWatchableAsync(IMovieData movie)
         {
-            var asyncIndexResponse = await _elasticClient.IndexAsync<string>("movie", movie.YearIndex(), movie.Title, new PostData<IMovieData>(movie));
-            return asyncIndexResponse.Body;
+            var asyncIndexResponse = await _elasticClient
+                .IndexAsync(movie);
+            return asyncIndexResponse;
         }
     }
 }

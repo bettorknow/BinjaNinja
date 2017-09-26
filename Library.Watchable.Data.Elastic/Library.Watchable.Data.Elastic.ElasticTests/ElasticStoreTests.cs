@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Elasticsearch.Net;
 using Library.Watchable.Data.Artifacts;
 using Library.Watchables.Data.Elastic;
 using Moq;
+using Nest;
 using NUnit.Framework;
 
 namespace Library.Watchable.Data.Elastic.ElasticTests
@@ -11,23 +13,26 @@ namespace Library.Watchable.Data.Elastic.ElasticTests
     public class ElasticStoreTests
     {
         [Test]
-        public void ExpectElasticStore_StoresTvIndex()
+        public async Task ExpectElasticStore_StoresTvIndexAsync()
         {
-            var settings = new ConnectionConfiguration(new Uri("http://192.168.0.60:9200"))
-                .RequestTimeout(TimeSpan.FromMinutes(2));
+            var settings = new ConnectionSettings(new Uri("http://192.168.0.60:9200"))
+                .DefaultIndex("tv");
 
-            var lowlevelClient = new ElasticLowLevelClient(settings);
+            var lowlevelClient = new ElasticClient(settings);
             var store = new ElasticStore(lowlevelClient);
+            var retrieve = new ElasticRetrieve(lowlevelClient);
 
             var tvShow = new TvData
             {
-                Title = "tvshow",
+                Title = "Game of Thrones",
                 Episodes = 10,
                 Series = 5
             };
 
-            var id = store.StoreTvWatchableAsync(tvShow);
-            Assert.That(id, Is.EqualTo(""));
+            var id = await store.StoreTvWatchableAsync(tvShow);
+            //Assert.That(id, Is.EqualTo(""));
+
+            var tv = retrieve.RetrieveTvData(tvShow.Title);
         }
     }
 }

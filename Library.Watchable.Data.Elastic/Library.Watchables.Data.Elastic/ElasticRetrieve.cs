@@ -1,55 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Elasticsearch.Net;
 using Library.Watchable.Data.Artifacts;
+using Nest;
 using Newtonsoft.Json;
 
 namespace Library.Watchables.Data.Elastic
 {
     public class ElasticRetrieve : IWatchableRetrieve
     {
-        private readonly IElasticLowLevelClient _elasticClient;
+        private readonly IElasticClient _elasticClient;
 
-        public ElasticRetrieve(IElasticLowLevelClient elasticClient)
+        public ElasticRetrieve(IElasticClient elasticClient)
         {
             _elasticClient = elasticClient;
         }
 
         public ITvData RetrieveTvData(string title)
         {
-            var searchResponse = _elasticClient.Search<string>("tv", new
-            {
-                from = 0,
-                size = 10,
-                query = new
-                {
-                    match = new
-                    {
-                        field = "title",
-                        query = title
-                    }
-                }
-            });
-            return JsonConvert.DeserializeObject<ITvData>(searchResponse.Body);
+            var searchResponse = _elasticClient.Search<TvData>(s => s
+                    .AllTypes()
+                    .From(0)
+                    .Size(10)
+                    .Query(q => q
+                        .Match(m => m
+                            .Field(f => f.Title)
+                            .Query(title)
+                        )
+                    ))
+                ;
+            return searchResponse.Documents.First();
         }
 
         public IMovieData RetrieveMovieData(string title)
         {
-            var searchResponse = _elasticClient.Search<string>("movie", new
-            {
-                from = 0,
-                size = 10,
-                query = new
-                {
-                    match = new
-                    {
-                        field = "title",
-                        query = title
-                    }
-                }
-            });
-            return JsonConvert.DeserializeObject<IMovieData>(searchResponse.Body);
+            var searchResponse = _elasticClient.Search<MovieData>(s => s
+                    .AllTypes()
+                    .From(0)
+                    .Size(10)
+                    .Query(q => q
+                        .Match(m => m
+                            .Field(f => f.Title)
+                            .Query(title)
+                        )
+                    ))
+                ;
+            return searchResponse.Documents.First();
         }
     }
 }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Library.Watchable.Data.Artifacts;
+﻿using Library.Watchable.Data.Artifacts;
 
-namespace Library.Watchable.Data.Elastic.ElasticTests
+namespace Library.Watchables.Data.Elastic
 {
     public class TvData : ITvData
     {
